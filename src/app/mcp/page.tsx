@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Monitor, 
   Database, 
@@ -61,22 +61,39 @@ const PHASES = {
 };
 
 export default function MCPVisualizer() {
-  const [phase, setPhase] = useState(PHASES.CONNECTING);
+type Phase = (typeof PHASES)[keyof typeof PHASES];
+type PacketDirection = 'c2s' | 's2c';
+type PacketType = 'request' | 'response' | 'tool' | 'resource' | 'prompt';
+type LogType = 'info' | 'neutral' | 'success' | 'purple';
+
+type PacketData = {
+  id: number;
+  type: PacketType;
+  direction: PacketDirection;
+  icon: React.ComponentType<{ className?: string }>;
+};
+
+type LogEntry = {
+  id: number;
+  text: string;
+  type: LogType;
+};
+
+  const [phase, setPhase] = useState<Phase>(PHASES.CONNECTING);
   const [serverIndex, setServerIndex] = useState(0);
-  const [packets, setPackets] = useState([]); // 存储飞行中的数据包
-  const [logs, setLogs] = useState([]); // 底部日志
+  const [packets, setPackets] = useState<PacketData[]>([]); // 存储飞行中的数据包
+  const [logs, setLogs] = useState<LogEntry[]>([]); // 底部日志
 
   const currentServer = SERVERS[serverIndex];
-  const timerRef = useRef(null);
 
   // 添加日志辅助函数
-  const addLog = (text, type = 'info') => {
+  const addLog = (text: string, type: LogType = 'info') => {
     setLogs(prev => [{ id: Date.now(), text, type }, ...prev].slice(0, 3));
   };
 
   // 主循环状态机
   useEffect(() => {
-    let timeout;
+    let timeout: ReturnType<typeof setTimeout>;
 
     const runPhase = () => {
       switch (phase) {
@@ -133,7 +150,7 @@ export default function MCPVisualizer() {
   }, [phase, serverIndex]);
 
   // 发射数据包逻辑
-  const emitPackets = (types, direction) => {
+  const emitPackets = (types: PacketType[], direction: PacketDirection) => {
     types.forEach((type, index) => {
       setTimeout(() => {
         const newPacket = {
@@ -152,7 +169,7 @@ export default function MCPVisualizer() {
     });
   };
 
-  const getPacketIcon = (type) => {
+  const getPacketIcon = (type: PacketType): React.ComponentType<{ className?: string }> => {
     switch(type) {
       case 'request': return Zap;
       case 'response': return Box;
@@ -254,9 +271,9 @@ export default function MCPVisualizer() {
             
             {/* Capabilities Tags (Only show when connected) */}
             <div className={`absolute -right-32 top-0 flex flex-col gap-2 transition-all duration-500 ${phase === PHASES.CONNECTING || phase === PHASES.SWITCHING ? 'opacity-0 translate-x-[-10px]' : 'opacity-100 translate-x-0'}`}>
-               <Badge text="Tools" color="bg-pink-500/20 text-pink-300" delay="100" />
-               <Badge text="Prompts" color="bg-purple-500/20 text-purple-300" delay="200" />
-               <Badge text="Resources" color="bg-blue-500/20 text-blue-300" delay="300" />
+               <Badge text="Tools" color="bg-pink-500/20 text-pink-300" delay={100} />
+               <Badge text="Prompts" color="bg-purple-500/20 text-purple-300" delay={200} />
+               <Badge text="Resources" color="bg-blue-500/20 text-blue-300" delay={300} />
             </div>
 
           </div>
@@ -293,7 +310,7 @@ export default function MCPVisualizer() {
 }
 
 // Sub-component: Moving Packet
-function Packet({ data }) {
+function Packet({ data }: { data: PacketData }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -323,7 +340,7 @@ function Packet({ data }) {
 }
 
 // Sub-component: Simple Badge
-function Badge({ text, color, delay }) {
+function Badge({ text, color, delay = 0 }: { text: string; color: string; delay?: number }) {
   return (
     <div className={`text-xs px-2 py-1 rounded border ${color} animate-in fade-in slide-in-from-left-4 duration-500`} style={{ animationDelay: `${delay}ms` }}>
       {text}
