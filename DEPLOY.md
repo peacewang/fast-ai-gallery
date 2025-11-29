@@ -15,101 +15,117 @@
 - pnpm
 - Git
 
+## 快速开始
+
+### 方式一：自动化配置（推荐）
+
+1. **在本地 Windows 环境**，双击运行 `setup-server-remote.bat`，脚本会自动：
+   - 上传配置脚本到服务器
+   - 执行环境检查和安装
+   - 配置 Node.js、pnpm、PM2
+
+2. **SSH 到服务器**，执行首次部署：
+   ```bash
+   ssh root@47.106.199.235
+   cd /var/www/html/gallery-app
+   # 克隆代码（如果还没有）
+   git clone <your-repo-url> .
+   # 执行首次部署
+   bash deploy-first-time.sh
+   ```
+
+### 方式二：手动配置
+
+按照下面的详细步骤手动配置。
+
 ## 部署步骤
 
 ### 1. 服务器端准备
 
-#### 1.1 安装 Node.js (如果未安装)
+#### 1.1 使用自动化脚本（推荐）
 
 ```bash
-# 使用 NodeSource 安装 Node.js 20
+# 上传 setup-server.sh 到服务器后执行
+chmod +x setup-server.sh
+bash setup-server.sh
+```
+
+脚本会自动检查并安装：
+- Node.js 20 (如果未安装)
+- pnpm (如果未安装)
+- PM2 (如果未安装)
+- 创建项目目录 `/var/www/html/gallery-app`
+- 检查端口占用情况
+
+#### 1.2 手动安装（如果脚本失败）
+
+```bash
+# 安装 Node.js 20
 curl -fsSL https://rpm.nodesource.com/setup_20.x | bash -
 yum install -y nodejs
 
 # 验证安装
 node --version
 npm --version
-```
 
-#### 1.2 安装 pnpm
-
-```bash
+# 安装 pnpm
 npm install -g pnpm
-```
 
-#### 1.3 安装 PM2 (推荐用于进程管理)
-
-```bash
+# 安装 PM2
 npm install -g pm2
-```
 
-#### 1.4 创建项目目录
-
-```bash
-# 在服务器上创建 gallery 项目目录
+# 创建项目目录
 mkdir -p /var/www/html/gallery-app
 cd /var/www/html/gallery-app
 ```
 
 ### 2. 首次部署
 
-#### 2.1 克隆或拉取代码
+#### 2.1 使用自动化脚本（推荐）
 
 ```bash
-# 如果使用 Git 仓库
+cd /var/www/html/gallery-app
+# 确保代码已克隆或拉取最新
+git pull  # 或 git clone <your-repo-url> .
+
+# 执行首次部署脚本
+bash deploy-first-time.sh
+```
+
+脚本会自动执行：
+- 安装依赖 (`pnpm install`)
+- 构建项目 (`pnpm build`)
+- 创建 `.env.production` 配置文件
+- 启动 PM2 服务
+- 配置开机自启
+
+#### 2.2 手动部署
+
+```bash
+# 1. 克隆或拉取代码
 cd /var/www/html/gallery-app
 git clone <your-gallery-repo-url> .
-
-# 或者如果已经在服务器上，直接拉取
+# 或
 git pull
-```
 
-#### 2.2 安装依赖
-
-```bash
-cd /var/www/html/gallery-app
+# 2. 安装依赖
 pnpm install
-```
 
-#### 2.3 构建项目
-
-```bash
-# 构建 Next.js 应用
+# 3. 构建项目
 pnpm build
-```
 
-#### 2.4 使用 PM2 启动服务
-
-```bash
-# 启动 Next.js 服务器
-pm2 start pnpm --name "gallery-app" -- start
-
-# 或者直接使用 node
-pm2 start node_modules/.bin/next --name "gallery-app" -- start
-
-# 设置开机自启
-pm2 save
-pm2 startup
-```
-
-**注意**: Next.js 默认运行在 3000 端口，我们需要配置它运行在其他端口（如 3001），避免与 quote-app 冲突。
-
-#### 2.5 配置端口
-
-创建 `.env.production` 文件：
-
-```bash
-cd /var/www/html/gallery-app
+# 4. 创建生产环境配置
 echo "PORT=3001" > .env.production
-```
 
-然后修改启动命令：
-
-```bash
-pm2 delete gallery-app
+# 5. 启动 PM2 服务
 PORT=3001 pm2 start pnpm --name "gallery-app" -- start
+
+# 6. 设置开机自启
 pm2 save
+pm2 startup  # 首次使用需要执行输出的命令
 ```
+
+**注意**: Next.js 默认运行在 3000 端口，我们配置为 3001 端口，避免与 quote-app (8080) 或其他服务冲突。
 
 ### 3. 配置 Tengine 反向代理
 
