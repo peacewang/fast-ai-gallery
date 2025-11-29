@@ -5,7 +5,7 @@ echo ========================================
 echo.
 
 :: 配置区域 - 根据实际情况修改
-set SERVER_IP=47.106.199.235
+set SERVER_IP=YOUR_SERVER_IP
 set SERVER_USER=root
 set GALLERY_DIR=/var/www/html/gallery-app
 set PM2_APP_NAME=gallery-app

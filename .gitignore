@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 部署配置文件（包含服务器IP，不提交到Git）
+deploy-gallery.bat
+QUICK_START.md
