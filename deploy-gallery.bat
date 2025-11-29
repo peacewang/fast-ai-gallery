@@ -1,0 +1,73 @@
+@echo off
+echo ========================================
+echo Gallery 项目部署脚本
+echo ========================================
+echo.
+
+:: 配置区域 - 根据实际情况修改
+set SERVER_IP=47.106.199.235
+set SERVER_USER=root
+set GALLERY_DIR=/var/www/html/gallery-app
+set PM2_APP_NAME=gallery-app
+
+echo [1/5] 检查 Git 状态...
+echo ----------------------------------------
+git status
+echo.
+set /p CONFIRM="确认要部署吗？(Y/N): "
+if /i not "%CONFIRM%"=="Y" (
+    echo 部署已取消
+    pause
+    exit /b
+)
+
+echo.
+echo [2/5] 推送代码到 GitHub...
+echo ----------------------------------------
+git add .
+git commit -m "Deploy: Auto deploy gallery app" 2>nul
+git push
+if %errorlevel% neq 0 (
+    echo 警告: Git push 可能失败，但继续部署流程...
+)
+
+echo.
+echo [3/5] 连接到服务器并拉取代码...
+echo ----------------------------------------
+ssh %SERVER_USER%@%SERVER_IP% "cd %GALLERY_DIR% && git pull"
+if %errorlevel% neq 0 (
+    echo 错误: 无法连接到服务器或拉取代码失败
+    pause
+    exit /b
+)
+
+echo.
+echo [4/5] 在服务器上安装依赖并构建...
+echo ----------------------------------------
+ssh %SERVER_USER%@%SERVER_IP% "cd %GALLERY_DIR% && pnpm install && pnpm build"
+if %errorlevel% neq 0 (
+    echo 错误: 构建失败，请检查服务器日志
+    pause
+    exit /b
+)
+
+echo.
+echo [5/5] 重启 PM2 服务...
+echo ----------------------------------------
+ssh %SERVER_USER%@%SERVER_IP% "pm2 restart %PM2_APP_NAME% && pm2 save"
+if %errorlevel% neq 0 (
+    echo 警告: PM2 重启可能失败，请手动检查服务状态
+)
+
+echo.
+echo ========================================
+echo 部署完成！
+echo ========================================
+echo.
+echo 访问地址: https://www.peacewang.com/gallery
+echo.
+echo 查看服务状态: ssh %SERVER_USER%@%SERVER_IP% "pm2 status %PM2_APP_NAME%"
+echo 查看服务日志: ssh %SERVER_USER%@%SERVER_IP% "pm2 logs %PM2_APP_NAME% --lines 20"
+echo.
+pause
+
