@@ -37,7 +37,19 @@ pnpm dev
 
 ### 快速部署
 
-在 Windows 环境下，双击运行 `deploy-gallery.bat` 脚本即可自动完成部署。
+**首次使用**：需要先配置部署脚本：
+
+1. 复制模板文件：
+   ```bash
+   cp deploy-gallery.bat.example deploy-gallery.bat
+   cp QUICK_START.md.example QUICK_START.md
+   ```
+
+2. 编辑 `deploy-gallery.bat`，修改服务器IP和配置信息
+
+3. 在 Windows 环境下，双击运行 `deploy-gallery.bat` 脚本即可自动完成部署
+
+**注意**：`deploy-gallery.bat` 和 `QUICK_START.md` 包含服务器敏感信息，已添加到 `.gitignore`，不会提交到 Git。
 
 ### 详细部署说明
 
