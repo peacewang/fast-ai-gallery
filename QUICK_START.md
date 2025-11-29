@@ -1,32 +1,28 @@
 # Gallery 项目快速部署指南
 
-本文档提供最快速的部署方式，适合首次配置服务器环境。
+**注意**：首次部署已完成。本文档主要说明日常代码更新部署流程。
 
-## 前置条件
+## 日常更新部署
 
-- 已配置 SSH 密钥认证（无需密码登录）
-- 服务器 IP: `47.106.199.235`
-- 服务器用户: `root`
-
-## 一键配置流程
-
-### 步骤 1: 配置服务器环境（本地执行）
+### 一键部署（推荐）
 
 在 Windows 环境下，双击运行：
 
 ```
-setup-server-remote.bat
+deploy-gallery.bat
 ```
 
-这个脚本会：
-- ✅ 自动上传配置脚本到服务器
-- ✅ 检查并安装 Node.js 20
-- ✅ 检查并安装 pnpm
-- ✅ 检查并安装 PM2
-- ✅ 创建项目目录 `/var/www/html/gallery-app`
-- ✅ 检查端口占用情况
+脚本会自动完成：
+- ✅ 推送代码到 GitHub
+- ✅ SSH 连接到服务器
+- ✅ 拉取最新代码
+- ✅ 重新安装依赖（如有变更）
+- ✅ 重新构建项目
+- ✅ 重启 PM2 服务
 
-### 步骤 2: SSH 到服务器并部署
+### 手动部署
+
+如果需要手动部署，在服务器上执行：
 
 ```bash
 # 1. SSH 连接到服务器
@@ -35,13 +31,17 @@ ssh root@47.106.199.235
 # 2. 进入项目目录
 cd /var/www/html/gallery-app
 
-# 3. 克隆代码（首次）或拉取最新代码
-git clone <your-gallery-repo-url> .
-# 或如果已有代码
+# 3. 拉取最新代码
 git pull
 
-# 4. 执行首次部署脚本
-bash deploy-first-time.sh
+# 4. 安装依赖（如果 package.json 有更新）
+pnpm install
+
+# 5. 重新构建
+pnpm build
+
+# 6. 重启服务
+pm2 restart gallery-app
 ```
 
 ### 步骤 3: 配置 Tengine 反向代理

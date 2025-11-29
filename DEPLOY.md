@@ -17,47 +17,30 @@
 
 ## 快速开始
 
-### 方式一：自动化配置（推荐）
+**注意**：首次部署已完成，服务器环境已配置。本文档主要说明日常代码更新部署流程。
 
-1. **在本地 Windows 环境**，双击运行 `setup-server-remote.bat`，脚本会自动：
-   - 上传配置脚本到服务器
-   - 执行环境检查和安装
-   - 配置 Node.js、pnpm、PM2
+### 日常更新部署
 
-2. **SSH 到服务器**，执行首次部署：
-   ```bash
-   ssh root@47.106.199.235
-   cd /var/www/html/gallery-app
-   # 克隆代码（如果还没有）
-   git clone <your-repo-url> .
-   # 执行首次部署
-   bash deploy-first-time.sh
-   ```
+使用 `deploy-gallery.bat` 脚本一键部署更新：
 
-### 方式二：手动配置
+1. 在本地 Windows 环境，双击运行 `deploy-gallery.bat`
+2. 脚本会自动：
+   - 推送代码到 GitHub
+   - SSH 连接到服务器
+   - 拉取最新代码
+   - 重新安装依赖（如有变更）
+   - 重新构建项目
+   - 重启 PM2 服务
 
-按照下面的详细步骤手动配置。
+### 首次部署说明
+
+如果需要在新的服务器上部署，请参考下面的详细步骤。
 
 ## 部署步骤
 
 ### 1. 服务器端准备
 
-#### 1.1 使用自动化脚本（推荐）
-
-```bash
-# 上传 setup-server.sh 到服务器后执行
-chmod +x setup-server.sh
-bash setup-server.sh
-```
-
-脚本会自动检查并安装：
-- Node.js 20 (如果未安装)
-- pnpm (如果未安装)
-- PM2 (如果未安装)
-- 创建项目目录 `/var/www/html/gallery-app`
-- 检查端口占用情况
-
-#### 1.2 手动安装（如果脚本失败）
+#### 1.1 手动安装环境
 
 ```bash
 # 安装 Node.js 20
@@ -81,25 +64,7 @@ cd /var/www/html/gallery-app
 
 ### 2. 首次部署
 
-#### 2.1 使用自动化脚本（推荐）
-
-```bash
-cd /var/www/html/gallery-app
-# 确保代码已克隆或拉取最新
-git pull  # 或 git clone <your-repo-url> .
-
-# 执行首次部署脚本
-bash deploy-first-time.sh
-```
-
-脚本会自动执行：
-- 安装依赖 (`pnpm install`)
-- 构建项目 (`pnpm build`)
-- 创建 `.env.production` 配置文件
-- 启动 PM2 服务
-- 配置开机自启
-
-#### 2.2 手动部署
+#### 2.1 首次部署步骤
 
 ```bash
 # 1. 克隆或拉取代码
