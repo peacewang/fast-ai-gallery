@@ -36,14 +36,6 @@ export function SiteHeader({ locale }: SiteHeaderProps) {
             >
               <Github size={14} /> GitHub
             </a>
-            <a
-              href={siteConfig.x}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1 rounded-full border border-transparent px-3 py-1.5 text-zinc-600 transition hover:border-zinc-900 hover:text-zinc-900 dark:text-zinc-200 dark:hover:border-zinc-200 dark:hover:text-white"
-            >
-              <Twitter size={14} /> X
-            </a>
           </nav>
           <LocaleSwitcher currentLocale={locale} />
         </div>

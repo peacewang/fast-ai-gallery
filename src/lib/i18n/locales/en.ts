@@ -23,7 +23,7 @@ export const enDictionary: Dictionary = {
     steps: [
       {
         title: "Fork the repo",
-        body: `# Fork on GitHub\nhttps://github.com/ZeroZ-lab/fast-ai-gallery\n# Or via CLI\ngh repo fork ZeroZ-lab/fast-ai-gallery --clone`,
+        body: `# Fork on GitHub\nhttps://github.com/peacewang/fast-ai-gallery\n# Or via CLI\ngh repo fork peacewang/fast-ai-gallery --clone`,
       },
       {
         title: "Duplicate the template",

@@ -17,26 +17,4 @@ export const zhDictionary: Dictionary = {
     configFile: "demo.json",
     cardCta: "打开 Demo",
   },
-  workflow: {
-    title: "如何为 AI Gallery 添加作品",
-    intro: "Follow the workflow",
-    steps: [
-      {
-        title: "Fork 仓库",
-        body: `# 在 GitHub 上 Fork\nhttps://github.com/ZeroZ-lab/fast-ai-gallery\n# 或使用 CLI\ngh repo fork ZeroZ-lab/fast-ai-gallery --clone`,
-      },
-      {
-        title: "复制模板",
-        body: `mkdir -p src/app/my-demo\ncp src/app/poetry/page.tsx src/app/my-demo/page.tsx`,
-      },
-      {
-        title: "添加 metadata",
-        body: `# src/app/my-demo/demo.json\n{\n  "title": "My Demo",\n  "description": "一句话描述",\n  "image": "cover.jpg"\n}`,
-      },
-      {
-        title: "放置封面",
-        body: `# 将封面图放在该目录\ncp ~/Downloads/cover.png src/app/my-demo/cover.png`,
-      },
-    ],
-  },
 };
