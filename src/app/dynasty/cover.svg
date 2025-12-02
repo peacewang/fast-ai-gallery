@@ -1,0 +1,121 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- 渐变背景 -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1e1b4b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#312e81;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e1b4b;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- 光效 -->
+    <radialGradient id="glow" cx="50%" cy="50%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0" />
+    </radialGradient>
+    
+    <!-- 文字阴影 -->
+    <filter id="textShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+  
+  <!-- 背景 -->
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- 光效层 -->
+  <ellipse cx="300" cy="200" rx="200" ry="200" fill="url(#glow)" opacity="0.6"/>
+  <ellipse cx="900" cy="430" rx="250" ry="250" fill="url(#glow)" opacity="0.4"/>
+  
+  <!-- 装饰性几何图案 -->
+  <g opacity="0.1">
+    <circle cx="100" cy="100" r="3" fill="#fff"/>
+    <circle cx="150" cy="120" r="2" fill="#fff"/>
+    <circle cx="200" cy="90" r="2.5" fill="#fff"/>
+    <circle cx="1100" cy="530" r="3" fill="#fff"/>
+    <circle cx="1150" cy="550" r="2" fill="#fff"/>
+    <circle cx="1050" cy="510" r="2.5" fill="#fff"/>
+  </g>
+  
+  <!-- 时间轴线条 -->
+  <line x1="100" y1="400" x2="1100" y2="400" stroke="#8b5cf6" stroke-width="3" opacity="0.4"/>
+  
+  <!-- 朝代节点（简化版） -->
+  <g>
+    <!-- 夏 -->
+    <circle cx="150" cy="400" r="8" fill="#8B4513" opacity="0.8"/>
+    <!-- 商 -->
+    <circle cx="250" cy="400" r="8" fill="#CD853F" opacity="0.8"/>
+    <!-- 周 -->
+    <circle cx="350" cy="400" r="8" fill="#4169E1" opacity="0.8"/>
+    <!-- 秦 -->
+    <circle cx="450" cy="400" r="8" fill="#2F4F4F" opacity="0.8"/>
+    <!-- 汉 -->
+    <circle cx="550" cy="400" r="8" fill="#FF6347" opacity="0.8"/>
+    <!-- 唐 -->
+    <circle cx="650" cy="400" r="10" fill="#FFD700" opacity="0.8"/>
+    <!-- 宋 -->
+    <circle cx="750" cy="400" r="8" fill="#32CD32" opacity="0.8"/>
+    <!-- 明 -->
+    <circle cx="850" cy="400" r="8" fill="#DC143C" opacity="0.8"/>
+    <!-- 清 -->
+    <circle cx="950" cy="400" r="8" fill="#000000" opacity="0.8"/>
+  </g>
+  
+  <!-- 连接线 -->
+  <path d="M 150 400 L 250 400 L 350 400 L 450 400 L 550 400 L 650 400 L 750 400 L 850 400 L 950 400" 
+        stroke="#8b5cf6" stroke-width="2" fill="none" opacity="0.3" stroke-dasharray="5,5"/>
+  
+  <!-- 主标题 -->
+  <text x="600" y="180" font-family="Arial, sans-serif" font-size="72" font-weight="bold" 
+        fill="#ffffff" text-anchor="middle" filter="url(#textShadow)">
+    中国朝代更迭
+  </text>
+  
+  <!-- 副标题 -->
+  <text x="600" y="240" font-family="Arial, sans-serif" font-size="32" 
+        fill="#e0e7ff" text-anchor="middle" opacity="0.9">
+    从夏朝到清朝的历史演示
+  </text>
+  
+  <!-- 英文副标题 -->
+  <text x="600" y="280" font-family="Arial, sans-serif" font-size="24" 
+        fill="#a5b4fc" text-anchor="middle" opacity="0.7">
+    Chinese Dynasty Timeline
+  </text>
+  
+  <!-- 装饰性文字（朝代名称） -->
+  <g opacity="0.15" font-family="Arial, sans-serif" font-size="16">
+    <text x="150" y="380" fill="#fff" text-anchor="middle">夏</text>
+    <text x="250" y="380" fill="#fff" text-anchor="middle">商</text>
+    <text x="350" y="380" fill="#fff" text-anchor="middle">周</text>
+    <text x="450" y="380" fill="#fff" text-anchor="middle">秦</text>
+    <text x="550" y="380" fill="#fff" text-anchor="middle">汉</text>
+    <text x="650" y="380" fill="#fff" text-anchor="middle">唐</text>
+    <text x="750" y="380" fill="#fff" text-anchor="middle">宋</text>
+    <text x="850" y="380" fill="#fff" text-anchor="middle">明</text>
+    <text x="950" y="380" fill="#fff" text-anchor="middle">清</text>
+  </g>
+  
+  <!-- 底部装饰线条 -->
+  <line x1="200" y1="500" x2="1000" y2="500" stroke="#8b5cf6" stroke-width="2" opacity="0.3"/>
+  
+  <!-- 特色元素：古代建筑轮廓 -->
+  <g opacity="0.2">
+    <!-- 简化版宫殿轮廓 -->
+    <path d="M 200 450 L 220 430 L 240 450 L 240 480 L 200 480 Z" fill="#fff"/>
+    <path d="M 1000 450 L 1020 430 L 1040 450 L 1040 480 L 1000 480 Z" fill="#fff"/>
+  </g>
+  
+  <!-- 年份标注 -->
+  <text x="150" y="430" font-family="Arial, sans-serif" font-size="12" 
+        fill="#c7d2fe" text-anchor="middle" opacity="0.6">-2070</text>
+  <text x="950" y="430" font-family="Arial, sans-serif" font-size="12" 
+        fill="#c7d2fe" text-anchor="middle" opacity="0.6">1912</text>
+  
+  <!-- 底部信息 -->
+  <text x="600" y="560" font-family="Arial, sans-serif" font-size="18" 
+        fill="#a5b4fc" text-anchor="middle" opacity="0.8">
+    开国皇帝 · 时间 · 都城 · 重要事件 · 衰落原因
+  </text>
+</svg>
+

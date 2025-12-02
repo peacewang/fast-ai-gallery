@@ -6,14 +6,34 @@ AI Gallery 是一个极简的 Next.js 外壳，用来快速托管交互 Demo。�
 
 ## 本地开发
 
+### 快速启动
+
+**方法1：使用启动脚本（Windows）**
 ```bash
-pnpm install
-pnpm dev
+# 双击运行 start-dev.bat
+# 或在命令行执行：
+start-dev.bat
+```
+
+**方法2：使用命令行**
+```bash
+# 安装依赖（首次运行）
+npm install
+
+# 启动开发服务器
+npm run dev
 ```
 
 然后打开 [http://localhost:3000](http://localhost:3000) 查看首页，以及当前维护的 Demo 链接。
 
 **注意**: 本地开发时，`basePath` 配置会自动禁用，可以直接访问根路径。生产环境会自动使用 `/gallery` 作为基础路径。
+
+### 访问地址
+- **首页**：http://localhost:3000
+- **朝代演示**：http://localhost:3000/dynasty
+
+### 如果遇到问题
+请查看 `启动说明.md` 文件获取详细的故障排查指南。
 
 ## 如何添加新的 Demo
 
